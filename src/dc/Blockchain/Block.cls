@@ -1,0 +1,4 @@
+Class dc.Blockchain.Block
+{
+
+}
