@@ -1,4 +1,0 @@
-Class dc.Blockchain.Chain
-{
-
-}
