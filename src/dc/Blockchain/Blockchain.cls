@@ -18,7 +18,7 @@ Method createGenesisBlock() [ Language = python ]
     self.newBlock("1")
 }
 
-Method newBlock(previousHash) As %RegisteredObject [ Language = python ]
+Method newBlock(previousHash = "") As %RegisteredObject [ Language = python ]
 {
     import time
 
@@ -26,7 +26,7 @@ Method newBlock(previousHash) As %RegisteredObject [ Language = python ]
             "index": len(self.Chain) + 1,
             "timestamp": time.time(),
             "transactions": self.CurrentTransactions,
-            "previousHash": previousHash or self.Hash(self.Chain[-1]),
+            "previousHash": previousHash or self.Hash(self.LastBlock()),
         }
     
     self.CurrentTransactions = []
@@ -39,9 +39,34 @@ Method newBlock(previousHash) As %RegisteredObject [ Language = python ]
 Method Hash(block) As %String [ Language = python ]
 {
     import hashlib
-
+    import json
     block_string = json.dumps(block, sort_keys=True).encode()
+
     return hashlib.sha256(block_string).hexdigest()
+}
+
+Method LastBlock() As %RegisteredObject [ Language = python ]
+{
+    return self.Chain[-1]
+}
+
+Method newTransaction(sender, amount, recipient) As %Integer [ Language = python ]
+{
+    transaction_fees = 0.00005
+    amount_receive_fees = 1 - transaction_fees
+
+    self.CurrentTransactions.append({
+        'sender': sender,
+        'amount_send': amount,
+
+        'bpsc': 'bpsc_wallet_address',
+        'amount_bpsc': amount * transaction_fees,
+
+        'recipient': recipient,
+        'amount_receive': amount * amount_receive_fees,
+    })
+
+    return self.LastBlock()['index'] + 1
 }
 
 Storage Default
