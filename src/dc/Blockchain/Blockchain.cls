@@ -69,6 +69,13 @@ Method newTransaction(sender, amount, recipient) As %Integer [ Language = python
     return self.LastBlock()['index'] + 1
 }
 
+ClassMethod InitNewBlockchain()
+{
+    Set blockchain = ##CLASS(dc.Blockchain.Blockchain).%New()
+    Do blockchain.%Save()
+    ZW blockchain
+}
+
 Storage Default
 {
 <Data name="BlockchainDefaultData">
