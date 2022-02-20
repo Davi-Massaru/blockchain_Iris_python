@@ -6,4 +6,6 @@ do ##class(Security.Users).UnExpireUserPasswords("*")
 zn "USER"
 do ##class(dc.Blockchain.Blockchain).InitNewBlockchain()
 
+zpm "load /opt/irisbuild/ -v":1:1
+
 halt
