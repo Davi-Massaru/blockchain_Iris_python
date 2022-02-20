@@ -68,11 +68,11 @@ ClassMethod ping() As %Status
 XData UrlMap [ XMLNamespace = "http://www.intersystems.com/urlmap" ]
 {
 <Routes>
-    <Route Url="/ping"                  Method="GET"    Call="ping" Cors="true"/>
-    <Route Url="/:idBlockchain/mine"    Method="GET"    Call="mine" Cors="true"/>
-    <Route Url="/:idBlockchain/transactions/new"      Method="POST"   Call="newTransaction" Cors="true"/>
-    <Route Url="/:idBlockchain/chain"   Method="GET"    Call="chain" Cors="true"/>
-    <Route Url="/:idBlockchain/full"   Method="GET"    Call="full" Cors="true"/>
+    <Route Url="/ping"                              Method="GET"    Call="ping"             Cors="true"/>
+    <Route Url="/:idBlockchain/mine"                Method="GET"    Call="mine"             Cors="true"/>
+    <Route Url="/:idBlockchain/transactions/new"    Method="POST"   Call="newTransaction"   Cors="true"/>
+    <Route Url="/:idBlockchain/chain"               Method="GET"    Call="chain"            Cors="true"/>
+    <Route Url="/:idBlockchain/full"                Method="GET"    Call="full"             Cors="true"/>
 </Routes>
 }
 
