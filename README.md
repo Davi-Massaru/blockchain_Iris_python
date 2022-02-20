@@ -53,30 +53,7 @@ After installing the application, you can access the end-points to better unders
 Returns the current state of the blockchain and transactions that are waiting to be added to a block
 
 Response sample:
-```
-{
-	"Chain": [
-		{
-			"index": 1,
-			"timestamp": 1645393935.0290358,
-			"transactions": [],
-			"previousHash": "000",
-			"hash": "000",
-			"nonce": 1
-		}
-	],
-	"CurrentTransactions": [
-		{
-			"sender": "user 1",
-			"amount_send": 1.42,
-			"bpsc": "bpsc_wallet_address",
-			"amount_bpsc": 7.1e-05,
-			"recipient": "user 2",
-			"amount_receive": 1.419929
-		}
-	]
-}
-```
+<img src="https://raw.githubusercontent.com/Davi-Massaru/blockchain_Iris_python/main/img/full.png"></img>
 
 2. http://localhost:52773/api/blockchain/1/transactions/new [ POST ]
 
@@ -92,63 +69,21 @@ Request Content:
 ```
 
 Response sample:
-```
-{
-	"message": "Transaction will be added to Block 2"
-}
-```
+<img src="https://raw.githubusercontent.com/Davi-Massaru/blockchain_Iris_python/main/img/transactions_new.png"></img>
 
 3. http://localhost:52773/api/blockchain/1/mine [ GET ]
 
 Start mining a new block that will be added to the chain, returns added block information
 
 Response sample:
-```
-{
-	"message": "New Block Forged",
-	"index": 2,
-	"timestamp": 1645395071.726108074,
-	"transactions": "[{\"sender\": \"user 1\", \"amount_send\": 1.42, \"bpsc\": \"bpsc_wallet_address\", \"amount_bpsc\": 7.1e-05, \"recipient\": \"user 2\", \"amount_receive\": 1.419929}]",
-	"previousHash": "000"
-}
-```
+<img src="https://raw.githubusercontent.com/Davi-Massaru/blockchain_Iris_python/main/img/mine.png"></img>
 
 4. http://localhost:52773/api/blockchain/1/chain [ GET ]
 
 Returns the current state of blockchain
 
-```
-{
-	"chain": [
-		{
-			"index": 1,
-			"timestamp": 1645393935.0290358,
-			"transactions": [],
-			"previousHash": "000",
-			"hash": "000",
-			"nonce": 1
-		},
-		{
-			"index": 2,
-			"timestamp": 1645395071.726108,
-			"transactions": [
-				{
-					"sender": "user 1",
-					"amount_send": 1.42,
-					"bpsc": "bpsc_wallet_address",
-					"amount_bpsc": 7.1e-05,
-					"recipient": "user 2",
-					"amount_receive": 1.419929
-				}
-			],
-			"previousHash": "000",
-			"hash": "000b853ef889e52b56a876e2de8de233c1401fcebde2fc0f8c6dcbe95002514c",
-			"nonce": 4637
-		}
-	],
-	"length": 2
-}
-```
+Response sample:
+<img src="https://raw.githubusercontent.com/Davi-Massaru/blockchain_Iris_python/main/img/chain.png"></img>
 
 ## References:
 - https://python.plainenglish.io/implementing-a-smart-blockchain-with-python-3183e0c1052e
