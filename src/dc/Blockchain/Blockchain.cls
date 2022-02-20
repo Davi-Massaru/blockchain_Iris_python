@@ -1,24 +1,46 @@
-Class dc.Blockchain.Blockchain Extends %Persistent
+Class dc.Blockchain.Blockchain Extends %Persistent [ Language = python ]
 {
 
-Property Chain As %SYS.Python;
+Property Chain As %String;
 
-Property CurrentTransactions As %SYS.Python;
+Property CurrentTransactions As %String;
 
-Method %OnNew() As %Status
+Method %OnNew() As %Status [ Language = objectscript ]
 {
     Do ..createGenesisBlock()
     return $$$OK
 }
 
-Method createGenesisBlock() [ Language = python ]
+Method %OnOpen() As %Status
+{
+    import json
+    import iris
+    
+    self.Chain = json.loads(self.Chain )
+    self.CurrentTransactions = json.loads(self.CurrentTransactions)
+
+    return iris.cls("%SYSTEM.Status").OK()
+}
+
+Method %OnBeforeSave(insert As %Boolean) As %Status
+{
+    import json
+    import iris
+
+    self.Chain = json.dumps(self.Chain)
+    self.CurrentTransactions = json.dumps(self.CurrentTransactions)
+
+    return iris.cls("%SYSTEM.Status").OK()
+}
+
+Method createGenesisBlock()
 {
     self.Chain = []
     self.CurrentTransactions = []
     self.newBlock("1")
 }
 
-Method newBlock(previousHash = "") As %RegisteredObject [ Language = python ]
+Method newBlock(previousHash = "")
 {
     import time
 
@@ -32,11 +54,9 @@ Method newBlock(previousHash = "") As %RegisteredObject [ Language = python ]
     self.CurrentTransactions = []
 
     self.Chain.append(block)
-    
-    return block
 }
 
-Method Hash(block) As %String [ Language = python ]
+Method Hash(block) As %String
 {
     import hashlib
     import json
@@ -45,12 +65,12 @@ Method Hash(block) As %String [ Language = python ]
     return hashlib.sha256(block_string).hexdigest()
 }
 
-Method LastBlock() As %RegisteredObject [ Language = python ]
+Method LastBlock()
 {
     return self.Chain[-1]
 }
 
-Method newTransaction(sender, amount, recipient) As %Integer [ Language = python ]
+Method newTransaction(sender, amount, recipient) As %Integer
 {
     transaction_fees = 0.00005
     amount_receive_fees = 1 - transaction_fees
@@ -69,10 +89,18 @@ Method newTransaction(sender, amount, recipient) As %Integer [ Language = python
     return self.LastBlock()['index'] + 1
 }
 
-ClassMethod InitNewBlockchain()
+Method ViewChain()
 {
-    Set blockchain = ##CLASS(dc.Blockchain.Blockchain).%New()
-    Do blockchain.%Save()
+    return {
+        'chain': self.Chain,
+        'length': len(self.Chain)
+    }
+}
+
+ClassMethod InitNewBlockchain() [ Language = objectscript ]
+{
+    Set blockchain = ##class(dc.Blockchain.Blockchain).%New()
+    W "CREATE blockchain Persistent Class:"_blockchain.%Save()
     ZW blockchain
 }
 
