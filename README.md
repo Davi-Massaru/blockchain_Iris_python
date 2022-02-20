@@ -4,6 +4,8 @@ Example of creating a financial blockchain Using Embedded Python on IRIS Data Pl
 
 ## What is a blockchain
 
+<img src="https://raw.githubusercontent.com/Davi-Massaru/blockchain_Iris_python/main/img/ico.png"></img>
+
 Blockchain is a chain of blocks, where each block contains information from the previous block, this concept can be applied in many ways.
 
 ## What is a blocks?
