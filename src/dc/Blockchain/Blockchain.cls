@@ -16,7 +16,7 @@ Method %OnOpen() As %Status
     import json
     import iris
     
-    self.Chain = json.loads(self.Chain )
+    self.Chain = json.loads(self.Chain)
     self.CurrentTransactions = json.loads(self.CurrentTransactions)
 
     return iris.cls("%SYSTEM.Status").OK()
@@ -29,6 +29,17 @@ Method %OnBeforeSave(insert As %Boolean) As %Status
 
     self.Chain = json.dumps(self.Chain)
     self.CurrentTransactions = json.dumps(self.CurrentTransactions)
+
+    return iris.cls("%SYSTEM.Status").OK()
+}
+
+Method %OnAfterSave(insert As %Boolean) As %Status
+{
+    import json
+    import iris
+
+    self.Chain = json.loads(self.Chain)
+    self.CurrentTransactions = json.loads(self.CurrentTransactions)
 
     return iris.cls("%SYSTEM.Status").OK()
 }
@@ -54,6 +65,8 @@ Method newBlock(previousHash = "")
     self.CurrentTransactions = []
 
     self.Chain.append(block)
+
+    return block
 }
 
 Method Hash(block) As %String
@@ -95,6 +108,18 @@ Method ViewChain()
         'chain': self.Chain,
         'length': len(self.Chain)
     }
+}
+
+Method ToString() As %String
+{
+    import json
+
+    data = {
+        'Chain' : self.Chain,
+        'CurrentTransactions' : self.CurrentTransactions
+    }
+
+    return json.dumps(data)
 }
 
 ClassMethod InitNewBlockchain() [ Language = objectscript ]

@@ -1,5 +1,5 @@
-ARG IMAGE=intersystemsdc/iris-community
-FROM $IMAGE
+
+FROM intersystemsdc/iris-community
 
 USER root
 ## add git
