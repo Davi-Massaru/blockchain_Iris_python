@@ -48,7 +48,7 @@ Method createGenesisBlock()
 {
     self.Chain = []
     self.CurrentTransactions = []
-    self.newBlock("1")
+    self.newBlock("000")
 }
 
 Method newBlock(previousHash = "")
@@ -59,23 +59,40 @@ Method newBlock(previousHash = "")
             "index": len(self.Chain) + 1,
             "timestamp": time.time(),
             "transactions": self.CurrentTransactions,
-            "previousHash": previousHash or self.Hash(self.LastBlock()),
+            "previousHash": previousHash or self.LastBlock()['hash']
         }
     
-    self.CurrentTransactions = []
+    block['hash'], block['nonce'] =  self.Hash(block, previousHash, 1) 
 
+    self.CurrentTransactions = []
     self.Chain.append(block)
 
     return block
 }
 
-Method Hash(block) As %String
+Method Hash(block, hash = "", nonce = 1) As %String
 {
     import hashlib
     import json
-    block_string = json.dumps(block, sort_keys=True).encode()
 
-    return hashlib.sha256(block_string).hexdigest()
+    index = block['index']
+    timestamp = block['timestamp']
+    transactions = block['transactions']
+    previousHash = block['previousHash']
+
+    while not self.isHashValid(hash):
+
+        block_string = '{}:{}:{}:{}:{}'.format(index, timestamp, transactions, previousHash, nonce)
+        
+        hash = hashlib.sha256(block_string.encode()).hexdigest()
+        nonce += 1
+    
+    return hash, nonce
+}
+
+Method isHashValid(hash) As %Boolean
+{
+    return hash.startswith('000')
 }
 
 Method LastBlock()

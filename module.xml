@@ -9,7 +9,7 @@
       <Resource Name="dc.PKG"/>
 
       <CSPApplication 
-        Url="/api"
+        Url="/api/blockchain"
         DispatchClass="dc.Blockchain.Server"
         MatchRoles=":{$dbrole}"
         PasswordAuthEnabled="0"

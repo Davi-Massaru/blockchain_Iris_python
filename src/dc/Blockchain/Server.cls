@@ -15,9 +15,7 @@ ClassMethod mine(idBlockchain As %Integer) As %Status
 {
     Set blockchain = ##CLASS(dc.Blockchain.Blockchain).%OpenId(idBlockchain)
 
-    Set lastBlock = blockchain.LastBlock()
-    Set previousHash = blockchain.Hash(lastBlock)
-    Set block = blockchain.newBlock(previousHash)
+    Set block = blockchain.newBlock()
 
     Do blockchain.%Save()
     
