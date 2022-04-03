@@ -4,7 +4,7 @@ zn "%SYS"
 do ##class(Security.Users).UnExpireUserPasswords("*")
 
 zn "USER"
-do ##class(dc.Blockchain.Blockchain).InitNewBlockchain()
+do  (##class(dc.Blockchain.Blockchain).%New()).createGenesisBlock()
 
 zpm "load /opt/irisbuild/ -v":1:1
 

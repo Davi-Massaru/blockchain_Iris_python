@@ -11,51 +11,48 @@ Parameter Version = "1.0.0";
 
 Parameter HandleCorsRequest = 1;
 
-ClassMethod mine(idBlockchain As %Integer) As %Status
+ClassMethod mine() As %Status
 {
-    Set blockchain = ##CLASS(dc.Blockchain.Blockchain).%OpenId(idBlockchain)
-
+    Set blockchain = ##CLASS(dc.Blockchain.GlobalBlockchain).%New()
     Set block = blockchain.newBlock()
 
-    Do blockchain.%Save()
-    
+    set idxBlock = block."__getitem__"("index")
+
     Write {
         "message": "New Block Forged",
-        "index": (block."__getitem__"("index")),
-        "timestamp": (block."__getitem__"("timestamp")),
-        "transactions": (##CLASS(dc.pythonHelper).pythonObjToString( block."__getitem__"("transactions"))),
-        "previousHash": (block."__getitem__"("previousHash"))
+        "index": (idxBlock),
+        "timestamp": (^GBlockchain(idxBlock,"timestamp")),
+        "transactions": (^GBlockchain(idxBlock,"transactions")),
+        "hash": (^GBlockchain(idxBlock,"hash")),
+        "previousHash":(^GBlockchain(idxBlock,"previousHash"))
     }.%ToJSON()
     
     Return $$$OK
 }
 
-ClassMethod newTransaction(idBlockchain As %Integer) As %Status
+ClassMethod newTransaction() As %Status
 {
     Set data = %request.Content
-    Set blockchain = ##CLASS(dc.Blockchain.Blockchain).%OpenId(idBlockchain)
+    Set blockchain = ##CLASS(dc.Blockchain.GlobalBlockchain).%New()
     Set index = blockchain.newTransaction(data.sender, data.amount, data.recipient)
-    Do blockchain.%Save()
     
     Write {"message": ("Transaction will be added to Block "_index) }.%ToJSON()
 
     Return $$$OK
 }
 
-ClassMethod chain(idBlockchain As %Integer) As %Status
+ClassMethod chain() As %Status
 {
-    Set blockchain = ##CLASS(dc.Blockchain.Blockchain).%OpenId(idBlockchain)
-    Write ##CLASS(dc.pythonHelper).pythonObjToString(blockchain.ViewChain())
+    Set blockchain = ##CLASS(dc.Blockchain.GlobalBlockchain).%New()
+    Write blockchain.chain()
 
     Return $$$OK
 }
 
-ClassMethod full(idBlockchain As %Integer) As %Status
+ClassMethod getBlock(index) As %Status
 {
-    Set blockchain = ##CLASS(dc.Blockchain.Blockchain).%OpenId(idBlockchain)
-
-    Write blockchain.ToString()
-
+    Set blockchain = ##CLASS(dc.Blockchain.GlobalBlockchain).%New()
+    Write blockchain.getBlock(index)
     Return $$$OK
 }
 
@@ -68,11 +65,11 @@ ClassMethod ping() As %Status
 XData UrlMap [ XMLNamespace = "http://www.intersystems.com/urlmap" ]
 {
 <Routes>
-    <Route Url="/ping"                              Method="GET"    Call="ping"             Cors="true"/>
-    <Route Url="/:idBlockchain/mine"                Method="GET"    Call="mine"             Cors="true"/>
-    <Route Url="/:idBlockchain/transactions/new"    Method="POST"   Call="newTransaction"   Cors="true"/>
-    <Route Url="/:idBlockchain/chain"               Method="GET"    Call="chain"            Cors="true"/>
-    <Route Url="/:idBlockchain/full"                Method="GET"    Call="full"             Cors="true"/>
+    <Route Url="/ping"                Method="GET"    Call="ping"             Cors="true"/>
+    <Route Url="/mine"                Method="GET"    Call="mine"             Cors="true"/>
+    <Route Url="/transactions/new"    Method="POST"   Call="newTransaction"   Cors="true"/>
+    <Route Url="/chain"               Method="GET"    Call="chain"             Cors="true"/>
+    <Route Url="/block/:index"        Method="GET"    Call="getBlock"             Cors="true"/>
 </Routes>
 }
 
