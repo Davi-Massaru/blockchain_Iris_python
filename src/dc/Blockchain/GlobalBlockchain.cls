@@ -35,13 +35,13 @@ Method newBlock(previousHash = "") As %SYS.Python
     block['hash'], block['nonce'] =  self.Hash(block, previousHash, 1) 
 
     GBlockchain[None] = index
-    GBlockchain[index] = block['index']
+    GBlockchain[index, 'index'] = block['index']
     GBlockchain[index, 'block'] = json.dumps(block)
-    GBlockchain[index,'timestamp'] = block['timestamp']
-    GBlockchain[index,'transactions'] = json.dumps(block['transactions'])
-    GBlockchain[index,'previousHash'] = block['previousHash']
-    GBlockchain[index,'hash'] = block['hash']
-    GBlockchain[index,'nonce'] = block['nonce']
+    GBlockchain[index, 'timestamp'] = block['timestamp']
+    GBlockchain[index, 'transactions'] = json.dumps(block['transactions'])
+    GBlockchain[index, 'previousHash'] = block['previousHash']
+    GBlockchain[index, 'hash'] = block['hash']
+    GBlockchain[index, 'nonce'] = block['nonce']
 
     return block
 }
