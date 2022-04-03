@@ -50,14 +50,14 @@ Run the endpoint ```curl http://localhost:52773/api/blockchain/ping``` to verify
 
 After installing the application, you can access the end-points to better understand how it works
 
-1. http://localhost:52773/api/blockchain/1/full [ GET ]
+1. http://localhost:52773/api/blockchain/chain [ GET ]
 
-Returns the current state of the blockchain and transactions that are waiting to be added to a block
+Returns the current state of blockchain
 
 Response sample:
-<img src="https://raw.githubusercontent.com/Davi-Massaru/blockchain_Iris_python/main/img/full.png"></img>
+<img src="https://raw.githubusercontent.com/Davi-Massaru/blockchain_Iris_python/main/img/chain.png"></img>
 
-2. http://localhost:52773/api/blockchain/1/transactions/new [ POST ]
+2. http://localhost:52773/api/blockchain/transactions/new [ POST ]
 
 Add a new transaction to be computed in a block, and return which block the transaction will be added
 
@@ -73,19 +73,35 @@ Request Content:
 Response sample:
 <img src="https://raw.githubusercontent.com/Davi-Massaru/blockchain_Iris_python/main/img/transactions_new.png"></img>
 
-3. http://localhost:52773/api/blockchain/1/mine [ GET ]
+3. http://localhost:52773/api/blockchain/mine [ GET ]
 
 Start mining a new block that will be added to the chain, returns added block information
 
 Response sample:
 <img src="https://raw.githubusercontent.com/Davi-Massaru/blockchain_Iris_python/main/img/mine.png"></img>
 
-4. http://localhost:52773/api/blockchain/1/chain [ GET ]
+4. http://localhost:52773/api/blockchain/block/{index} [ GET ]
 
-Returns the current state of blockchain
+Returns block information, in the given index
 
 Response sample:
-<img src="https://raw.githubusercontent.com/Davi-Massaru/blockchain_Iris_python/main/img/chain.png"></img>
+<img src="https://raw.githubusercontent.com/Davi-Massaru/blockchain_Iris_python/main/img/block.png"></img>
+
+### 
+
+You can better understand and track global content and transactions through the portal.
+
+Access http://localhost:52773/csp/sys/exp/UtilExpGlobalView.csp?$ID2=GBlockchain&$NAMESPACE=USER&$NAMESPACE=USER to see all blockchain content.
+
+<img src="https://raw.githubusercontent.com/Davi-Massaru/blockchain_Iris_python/main/img/globalGBlockchain.png"></img>
+
+Access http://localhost:52773/csp/sys/exp/UtilExpGlobalView.csp?$ID2=GBlockchain&$NAMESPACE=USER&$NAMESPACE=USER to see all blockchain content.
+
+<img src="https://raw.githubusercontent.com/Davi-Massaru/blockchain_Iris_python/main/img/globalGBlockchain.png"></img>
+
+Access http://localhost:52773/csp/sys/exp/UtilExpGlobalView.csp?$ID2=GTransactions&$NAMESPACE=USER&$NAMESPACE=USER to see all transactions made and in which blocks were mined
+
+<img src="https://raw.githubusercontent.com/Davi-Massaru/blockchain_Iris_python/main/img/globalGTransactions.png"></img>
 
 ## References:
 - https://python.plainenglish.io/implementing-a-smart-blockchain-with-python-3183e0c1052e
