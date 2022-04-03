@@ -87,7 +87,7 @@ Returns block information, in the given index
 Response sample:
 <img src="https://raw.githubusercontent.com/Davi-Massaru/blockchain_Iris_python/main/img/block.png"></img>
 
-### 
+### Exploring the blockchain
 
 You can better understand and track global content and transactions through the portal.
 
