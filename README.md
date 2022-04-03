@@ -95,10 +95,6 @@ Access http://localhost:52773/csp/sys/exp/UtilExpGlobalView.csp?$ID2=GBlockchain
 
 <img src="https://raw.githubusercontent.com/Davi-Massaru/blockchain_Iris_python/main/img/globalGBlockchain.png"></img>
 
-Access http://localhost:52773/csp/sys/exp/UtilExpGlobalView.csp?$ID2=GBlockchain&$NAMESPACE=USER&$NAMESPACE=USER to see all blockchain content.
-
-<img src="https://raw.githubusercontent.com/Davi-Massaru/blockchain_Iris_python/main/img/globalGBlockchain.png"></img>
-
 Access http://localhost:52773/csp/sys/exp/UtilExpGlobalView.csp?$ID2=GTransactions&$NAMESPACE=USER&$NAMESPACE=USER to see all transactions made and in which blocks were mined
 
 <img src="https://raw.githubusercontent.com/Davi-Massaru/blockchain_Iris_python/main/img/globalGTransactions.png"></img>
